@@ -2,7 +2,7 @@
  *  Copyright © 2008 Fair Oaks Labs, Inc.
  *  All rights reserved.
  */
-
+var bigInt = require("big-integer");
 // Utility object:  Encode/Decode C-style binary primitives to/from octet arrays
 function JSPack()
 {
@@ -34,8 +34,8 @@ function JSPack()
 	m._DeInt = function (a, p)
 	{
 		var lsb = bBE?(el.len-1):0, nsb = bBE?-1:1, stop = lsb+nsb*el.len, rv, i, f;
-		for (rv = 0, i = lsb, f = 1; i != stop; rv+=(a[p+i]*f), i+=nsb, f*=256);
-		if (el.bSigned && (rv & Math.pow(2, el.len*8-1))) { rv -= Math.pow(2, el.len*8); }
+		for (rv = bigInt(), i = lsb, f = bigInt(1); i != stop; rv=rv.add(f.times(a[p+i])), i+=nsb, f=f.times(256));
+		if (el.bSigned && (rv & Math.pow(2, el.len*8-1))) { rv -= Math.pow(2, el.len*8); }	// TODO: compatibilize this with big-integer
 		return rv;
 	};
 	m._EnInt = function (a, p, v)

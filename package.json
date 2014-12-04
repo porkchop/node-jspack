@@ -13,5 +13,8 @@
     "name":"Peter Magnusson"
   , "email":"peter@birchroad.net"
   , "web":"http://github.com/birchroad/node-jspack"
-  }]
+  }],
+  "dependencies": {
+    "big-integer": "1.3.18"
+  }
 }
